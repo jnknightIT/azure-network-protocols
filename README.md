@@ -78,7 +78,7 @@ You can drop the connection by typing "exit" in powershell.
 <br />
 
 <p>
-<img src="https://i.imgur.com/n9t7Q7a.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/OH8u2Li.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
 </p>
 <p>
@@ -87,7 +87,7 @@ In Wireshark, filter DHCP traffic by typing in "DHCP" in the search bar and pres
 <br />
 
 <p>
-<img src="https://i.imgur.com/CX5Qxzg.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/CrKy2kJ.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
 </p>
 <p>
