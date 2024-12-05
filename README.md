@@ -29,35 +29,57 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 <h2>Actions and Observations</h2>
 
 <p>
-<img src="https://i.imgur.com/IGXhluW.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-  <img src="https://i.imgur.com/zss4Ca5.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/8UEz44P.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+  
 </p>
 <p>
-Set up two virtual machines within Microsoft Azure. One will use Windows 10 OS (VM1) and the other will use Ubuntu (VM2). Using remote desktop, log into VM1. Browse the internet for the protocol analyzer called Wireshark and download the original version. Install using it's default settings. You will not have to check any boxes during installation. After installation, type "Powershell" into the search bar on the lower left area of the screen. Right-click on Windows Powershell and run as administrator. Verify connectivity by perpetually pinging VM2's private IP address. Run Wireshark. Select "ethernet"; type "ICMP" in the search bar at the top of the window and press enter. Traffic between both VMs will post on Wireshark.
-</p>
-<br />
-
-<p>
-<img src="https://i.imgur.com/Vo1KhFt.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-  <img src="https://i.imgur.com/6o8aA6p.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-  <img src="https://i.imgur.com/dt4AuGX.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Head back into the Azure portal, type "Network Security Group" into the search bar and select that option. There may be an instance where two groups were created for VM2. You will need to apply these steps to both groups. Select VM2nsg, select "inbound rules" and select "add". Toggle the protocol to "ICMP" and the "allow" action to "deny". The priority will be changed to "200" in order for it to be recognized before other inbound rules. We'll name it "DENY_PING_FROM_ANYWHERE". Click "add" and go back to VM1. Observe the ICMP traffic on wireshark and Powershell. It will have timed out. Switch back to Azure and edit the rule back to "allow". Go to VM1 to observe the requests being received again.
+Set up two virtual machines within Microsoft Azure. One will use Windows 10 OS  and the other will use Ubuntu connect them to the same virtural network.
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/WEjpu9t.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/zThBmd7.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-In the Wireshark window, press the stop button. Type "ssh" in the search bar and hit enter. Continue without saving. In Powershell, type in "ssh" and press enter. Next, type in your VM2 username @ VM2 (ex: user@VM2). You will be prompted to enter your password. Enter your VM2 password and you will see a large amount of traffic in Wireshark. After observing, type "exit" in powershell to revert back to VM1.
+use RDC to connect to the Windows 10 vm once logged in download Wireshark.
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/OLkeFna.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-  <img src="https://i.imgur.com/1pwH3Kx.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/WLxvqvN.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+  <img src="https://i.imgur.com/OntWOyw.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+open Wireshark highlight the network in the middle of the application and click the blue shark fin in the top left you should now see the network traffic on the VM.
+
+
+</p>
+<br />
+
+<p>
+<img src="https://i.imgur.com/NtaexLL.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+  <img src="https://i.imgur.com/7VcSpKs.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+   <img src="https://i.imgur.com/jzoTxDm.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>in Wireshark filter for ICMP traffic. Get the private IP address of the Lenux VM and ping it within the Windows vm.
+  on Azure portal go to the Lenux vm -> Network Settings -> inbound security rules (add a new rule and deny all ICMPv4 request).
+  ping the private IP again and the request should timeout. (you can delete the rule afterwords if you want.)
+</p>
+<br />
+
+<p>
+<img src="https://i.imgur.com/Pq6NQH5.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+</p>
+<p>
+from the Windows VM ssh into the Linux VM. Open PowerShell, and type: (ssh VMUSERNAME@LINUX private IP address). once logged in you should be able to see the traffic between the machines in Wireshark. ssh traffic is encripted so you cant see the data!
+You can drop the connection by typing "exit" in powershell.
+</p>
+<br />
+
+<p>
+<img src="https://i.imgur.com/n9t7Q7a.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
 </p>
 <p>
 In Wireshark, filter DHCP traffic by typing in "DHCP" in the search bar and press enter. Continue without saving. In Powershell, use command "nslookup" followed by a space and any website of your choice. Observe all the traffic created.
@@ -65,9 +87,12 @@ In Wireshark, filter DHCP traffic by typing in "DHCP" in the search bar and pres
 <br />
 
 <p>
-<img src="https://i.imgur.com/EvLSvR7.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/CX5Qxzg.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
 </p>
 <p>
-Lastly, to observe the Remote Desktop Protocol (RDP), you will type "tcp.port==3389" into the Wireshark search bar. This will display the real-time traffic that occurs between both computers.
+to see the Remote Desktop Protocol (RDP) you will type "tcp.port==3389" into Wireshark. This will display the real-time traffic that occurs between both computers.
 </p>
 <br />
+
+
